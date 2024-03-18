@@ -10,7 +10,7 @@
     </parent>
     <artifactId>service</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>domain</name>
+    <name>service</name>
 
     <dependencies>
         <dependency>
