@@ -1,0 +1,12 @@
+spring:
+  test:
+    database:
+      # By default, JPA tests (@DataJpaTest) override the datasource with an embedded one. It's not in the classpath,
+      # so the initialization fails. Therefore, disabling it to use our own datasource
+      replace: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gadgets_test
+    username: gadgets_test
+    password: gadgets_test
+  liquibase:
+    change-log: classpath:db/changelog/changelog-root.xml

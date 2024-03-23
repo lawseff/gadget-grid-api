@@ -1,0 +1,9 @@
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/changelog-root.xml
+  data:
+    web:
+      pageable:
+        max-page-size: 50
+        # Automatically decrements the page in incoming requests, so that pagination starts from 1 for the client
+        one-indexed-parameters: true

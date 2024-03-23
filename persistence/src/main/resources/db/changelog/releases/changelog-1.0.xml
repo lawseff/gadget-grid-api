@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- https://www.postgresql.org/docs/current/functions-uuid.html -->
+    <property name="uuid_function" dbms="postgresql" value="gen_random_uuid()"/>
+
+    <changeSet id="1" author="Mike L.">
+        <createTable tableName="gadget">
+            <!--
+             The column requires the "uuid_function" property, which is DB-dependent.
+             Be sure to check, if the <property/> for your DB is configured.
+            -->
+            <column name="id" type="uuid" defaultValueComputed="${uuid_function}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name_en" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length_mm" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="width_mm" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="height_mm" type="double">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <setTableRemarks tableName="gadget" remarks="Contains various generic devices"/>
+        <setColumnRemarks tableName="gadget" columnName="id" remarks="The unique identifier of the device"/>
+        <setColumnRemarks tableName="gadget" columnName="name_en" remarks="A generic device's name in English"/>
+        <setColumnRemarks tableName="gadget" columnName="length_mm" remarks="An approximate length in millimeters"/>
+        <setColumnRemarks tableName="gadget" columnName="width_mm" remarks="An approximate width in millimeters"/>
+        <setColumnRemarks tableName="gadget" columnName="height_mm" remarks="An approximate height in millimeters"/>
+    </changeSet>
+
+</databaseChangeLog>
