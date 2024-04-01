@@ -10,3 +10,4 @@ spring:
     password: gadgets_test
   liquibase:
     change-log: classpath:db/changelog/changelog-root.xml
+    contexts: test

@@ -3,3 +3,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/gadgets
     username: gadgets
     password: gadgets
+  liquibase:
+    contexts: dev

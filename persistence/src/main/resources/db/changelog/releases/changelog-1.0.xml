@@ -21,13 +21,13 @@
                 <constraints nullable="false"/>
             </column>
             <column name="length_mm" type="double">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="width_mm" type="double">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="height_mm" type="double">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </createTable>
         <setTableRemarks tableName="gadget" remarks="Contains various generic devices"/>
