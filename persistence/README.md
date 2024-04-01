@@ -3,7 +3,7 @@
 ## Local development
 
 Here are the steps to create the DB locally:
-1. Inside `domain` build the image using:
+1. Inside `persistence` build the image using:
     ```shell
     docker build -t gadgets-postgres .
     ``` 
