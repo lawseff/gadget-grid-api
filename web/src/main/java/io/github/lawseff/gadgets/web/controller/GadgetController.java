@@ -42,7 +42,7 @@ public class GadgetController {
 
   private PaginationDto incrementPageNumber(PaginationDto pagination) {
     return new PaginationDto(
-        pagination.totalCount(),
+        pagination.totalElements(),
         pagination.totalPages(),
         pagination.pageNumber() + 1,
         pagination.pageSize()
