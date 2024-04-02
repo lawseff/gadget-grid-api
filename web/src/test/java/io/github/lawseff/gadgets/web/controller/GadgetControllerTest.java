@@ -1,6 +1,5 @@
 package io.github.lawseff.gadgets.web.controller;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -111,7 +110,7 @@ class GadgetControllerTest extends ApiTest {
                 }
               ],
               "pagination": {
-                "totalCount": 8,
+                "totalElements": 8,
                 "totalPages": 1,
                 "page": 1,
                 "size": 12
@@ -177,7 +176,7 @@ class GadgetControllerTest extends ApiTest {
                 }
               ],
               "pagination": {
-                "totalCount": 8,
+                "totalElements": 8,
                 "totalPages": 3,
                 "page": 2,
                 "size": 3
@@ -207,7 +206,7 @@ class GadgetControllerTest extends ApiTest {
         .andExpect(jsonPath("$.pagination.page").value(1))
         .andExpect(jsonPath("$.pagination.size").value(expectedSize))
         .andExpect(jsonPath("$.pagination.totalPages").value(1))
-        .andExpect(jsonPath("$.pagination.totalCount").value(8))
+        .andExpect(jsonPath("$.pagination.totalElements").value(8))
         .andExpect(jsonPath("$.data.length()").value(8));
   }
 

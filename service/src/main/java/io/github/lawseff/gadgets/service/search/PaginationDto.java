@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record PaginationDto(
 
-  long totalCount,
+  long totalElements,
 
   int totalPages,
 
