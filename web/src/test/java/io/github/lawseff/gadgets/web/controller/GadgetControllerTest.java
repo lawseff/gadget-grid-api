@@ -5,8 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class GadgetControllerTest extends ApiTest {
 
@@ -114,7 +117,8 @@ class GadgetControllerTest extends ApiTest {
                 "totalPages": 1,
                 "page": 1,
                 "size": 12
-              }
+              },
+              "search": null
             }
             """.formatted(
                 testData.getActionCamera().getId(),
@@ -180,7 +184,8 @@ class GadgetControllerTest extends ApiTest {
                 "totalPages": 3,
                 "page": 2,
                 "size": 3
-              }
+              },
+              "search": null
             }
             """.formatted(
                 testData.getDrone().getId(),
@@ -188,6 +193,44 @@ class GadgetControllerTest extends ApiTest {
                 testData.getFitnessTracker().getId()
             ),
             // Strict assert for array ordering
+            true
+        ));
+  }
+
+  @Test
+  void searchWorks() throws Exception {
+    mockMvc.perform(get("/gadgets?search=tooTH+++speak"))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.CACHE_CONTROL, "max-age=3600"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            """
+            {
+              "data": [
+                {
+                  "id": "%s",
+                  "name": "Bluetooth Speaker",
+                  "dimensions": {
+                    "unit": "MM",
+                    "length": 150,
+                    "width": 80,
+                    "height": 25
+                  },
+                  "imageUrl": null
+                }
+              ],
+              "pagination": {
+                "totalElements": 1,
+                "totalPages": 1,
+                "page": 1,
+                "size": 12
+              },
+              "search": "tooth speak"
+            }
+            """.formatted(
+                testData.getBluetoothSpeaker().getId()
+            ),
+            // Strict assert for exact fields
             true
         ));
   }

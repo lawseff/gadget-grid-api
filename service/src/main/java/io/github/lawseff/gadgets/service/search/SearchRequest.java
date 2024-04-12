@@ -4,6 +4,8 @@ public record SearchRequest(
 
     int pageNumber,
 
-    int pageSize
+    int pageSize,
+
+    String searchString
 
 ) {}
