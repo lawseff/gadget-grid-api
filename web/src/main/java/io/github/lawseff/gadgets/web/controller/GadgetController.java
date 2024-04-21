@@ -1,6 +1,6 @@
 package io.github.lawseff.gadgets.web.controller;
 
-import io.github.lawseff.gadgets.service.GadgetService;
+import io.github.lawseff.gadgets.service.gadget.GadgetService;
 import io.github.lawseff.gadgets.service.gadget.GadgetDto;
 import io.github.lawseff.gadgets.service.search.PaginationDto;
 import io.github.lawseff.gadgets.service.search.SearchRequest;
@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URLDecoder;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 @RestController
+@RequestMapping("/gadgets")
 @RequiredArgsConstructor
 public class GadgetController {
 
@@ -25,7 +27,7 @@ public class GadgetController {
 
   private final GadgetService service;
 
-  @GetMapping("/gadgets")
+  @GetMapping
   public ResponseEntity<SearchResponse<GadgetDto>> findGadgets(
       @PageableDefault(size = 12, sort = "name") Pageable pageable,
       @RequestParam(name = "search", required = false) String searchString

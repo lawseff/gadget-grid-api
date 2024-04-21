@@ -17,7 +17,7 @@ public class Gadget {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(columnDefinition = "uuid", name = "id", updatable = false, insertable = false)
+  @Column(columnDefinition = "uuid", name = "id")
   private UUID id;
 
   @Column(name = "name_en")

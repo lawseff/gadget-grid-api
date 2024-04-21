@@ -1,6 +1,6 @@
 package io.github.lawseff.gadgets.service.gadget;
 
-import io.github.lawseff.gadgets.service.dimensions.DimensionsDto;
+import io.github.lawseff.gadgets.service.gadget.dimensions.DimensionsDto;
 import java.util.UUID;
 
 public record GadgetDto(
@@ -13,5 +13,4 @@ public record GadgetDto(
 
     DimensionsDto dimensions
 
-) {
-}
+) {}

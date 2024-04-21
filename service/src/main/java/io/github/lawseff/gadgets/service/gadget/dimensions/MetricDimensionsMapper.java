@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.service.dimensions;
+package io.github.lawseff.gadgets.service.gadget.dimensions;
 
 import io.github.lawseff.gadgets.persistence.entity.Dimensions;
 import org.springframework.stereotype.Component;
