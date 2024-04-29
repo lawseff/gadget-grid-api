@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.service.dimensions;
+package io.github.lawseff.gadgets.service.gadget.dimensions;
 
 public record DimensionsDto(
 

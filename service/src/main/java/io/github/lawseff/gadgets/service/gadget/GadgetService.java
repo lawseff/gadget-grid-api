@@ -1,9 +1,8 @@
-package io.github.lawseff.gadgets.service;
+package io.github.lawseff.gadgets.service.gadget;
 
 import io.github.lawseff.gadgets.persistence.GadgetRepository;
 import io.github.lawseff.gadgets.persistence.entity.Gadget;
-import io.github.lawseff.gadgets.service.gadget.GadgetDto;
-import io.github.lawseff.gadgets.service.gadget.GadgetMapper;
+import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.search.PaginationDto;
 import io.github.lawseff.gadgets.service.search.SearchRequest;
 import io.github.lawseff.gadgets.service.search.SearchResponse;
@@ -20,18 +19,20 @@ import java.util.Optional;
 public class GadgetService {
 
   /**
-   * Regex for two or more whitespace characters
+   * Regex for two or more whitespace characters.
    */
   private static final String MULTIPLE_WHITESPACES = "\\s{2,}";
 
   /**
-   * Single space character
+   * Single space character.
    */
   private static final String SINGLE_SPACE = " ";
 
   private final GadgetRepository repository;
 
   private final GadgetMapper mapper;
+
+  private final GadgetRepository gadgetRepository;
 
   public SearchResponse<GadgetDto> findGadgets(SearchRequest request) {
     Pageable pageable = PageRequest.of(request.pageNumber(), request.pageSize());
@@ -51,8 +52,11 @@ public class GadgetService {
   }
 
   private SearchResponse<GadgetDto> mapToResponse(Page<Gadget> page, Optional<String> searchString) {
+    var gadgets = page.get()
+        .map(gadget -> mapper.mapToDto(gadget, LengthUnit.MM))
+        .toList();
     return new SearchResponse<>(
-        page.get().map(mapper::mapToDto).toList(),
+        gadgets,
         new PaginationDto(
             page.getTotalElements(),
             page.getTotalPages(),
