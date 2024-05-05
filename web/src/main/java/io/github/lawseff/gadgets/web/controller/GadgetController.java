@@ -2,6 +2,7 @@ package io.github.lawseff.gadgets.web.controller;
 
 import io.github.lawseff.gadgets.service.gadget.GadgetService;
 import io.github.lawseff.gadgets.service.gadget.GadgetDto;
+import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.search.PaginationDto;
 import io.github.lawseff.gadgets.service.search.SearchRequest;
 import io.github.lawseff.gadgets.service.search.SearchResponse;
@@ -30,11 +31,12 @@ public class GadgetController {
   @GetMapping
   public ResponseEntity<SearchResponse<GadgetDto>> findGadgets(
       @PageableDefault(size = 12, sort = "name") Pageable pageable,
-      @RequestParam(name = "search", required = false) String searchString
-  ) {
-    // For some reason, Spring doesn't decode the query param ('%20' and '+' aren't decoded to space)
+      @RequestParam(name = "search", required = false) String searchString,
+      @RequestParam(name = "unit", required = false, defaultValue = "MM") LengthUnit unit
+      ) {
+    // For some reason, Spring doesn't decode the query param in tests ('%20' and '+' aren't decoded to space)
     var decodedSearchString = searchString != null ? URLDecoder.decode(searchString, StandardCharsets.UTF_8) : null;
-    var search = new SearchRequest(pageable.getPageNumber(), pageable.getPageSize(), decodedSearchString);
+    var search = new SearchRequest(pageable.getPageNumber(), pageable.getPageSize(), decodedSearchString, unit);
     var result = service.findGadgets(search);
     var body = new SearchResponse<>(
         result.data(),

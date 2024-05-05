@@ -32,15 +32,13 @@ public class GadgetService {
 
   private final GadgetMapper mapper;
 
-  private final GadgetRepository gadgetRepository;
-
   public SearchResponse<GadgetDto> findGadgets(SearchRequest request) {
     Pageable pageable = PageRequest.of(request.pageNumber(), request.pageSize());
     var searchString = prepareSearchString(request);
     var data = searchString.isPresent()
         ? repository.findByNameContainingIgnoreCase(pageable, searchString.get())
         : repository.findAll(pageable);
-    return mapToResponse(data, searchString);
+    return mapToResponse(data, searchString, request.unit());
   }
 
   private Optional<String> prepareSearchString(SearchRequest request) {
@@ -51,9 +49,11 @@ public class GadgetService {
         );
   }
 
-  private SearchResponse<GadgetDto> mapToResponse(Page<Gadget> page, Optional<String> searchString) {
+  private SearchResponse<GadgetDto> mapToResponse(
+      Page<Gadget> page, Optional<String> searchString, LengthUnit unit
+  ) {
     var gadgets = page.get()
-        .map(gadget -> mapper.mapToDto(gadget, LengthUnit.MM))
+        .map(gadget -> mapper.mapToDto(gadget, unit))
         .toList();
     return new SearchResponse<>(
         gadgets,

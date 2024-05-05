@@ -1,7 +1,9 @@
 package io.github.lawseff.gadgets.service.inventory;
 
 import io.github.lawseff.gadgets.persistence.GadgetRepository;
+import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.inventory.volume.VolumeCalculator;
+import io.github.lawseff.gadgets.service.inventory.volume.VolumeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,11 +15,15 @@ public class InventoryService {
 
   private final GadgetRepository repository;
 
-  private final VolumeCalculator metricalVolumeCalculator;
+  private final VolumeCalculator volumeCalculator;
 
-  public InventorySummaryDto getSummary(List<UUID> ids) {
+  public InventorySummaryDto getSummary(List<UUID> ids, LengthUnit lengthUnit) {
     var gadgets = repository.findAllByIdNonDistinct(ids);
-    var volume = metricalVolumeCalculator.getVolume(gadgets);
+    var volumeUnit = switch (lengthUnit) {
+      case MM -> VolumeUnit.LITER;
+      case INCH -> VolumeUnit.CUBIC_INCH;
+    };
+    var volume = volumeCalculator.getVolume(gadgets, volumeUnit);
     return new InventorySummaryDto(ids, volume);
   }
 

@@ -1,6 +1,9 @@
 package io.github.lawseff.gadgets.web.controller;
 
+import io.github.lawseff.gadgets.service.inventory.volume.VolumeUnit;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -8,16 +11,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class InventoryControllerTest extends ApiTest {
 
-  @Test
-  void getSummaryWorks() throws Exception {
+  @ParameterizedTest
+  @CsvSource({
+      "'',LITER,12.456", // Default unit, when not specified
+      "?unit=MM,LITER,12.456",
+      "?unit=INCH,CUBIC_INCH,760.1118"
+  })
+  void getSummaryWorks(String queryString, VolumeUnit expectedUnit, String expectedVolume) throws Exception {
     var gadgetIdArray = "[\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\"]".formatted(
         testData.getActionCamera().getId(), testData.getBluetoothSpeaker().getId(), testData.getDrone().getId(),
-        // Two gadgets of the same type
+        // Two gadgets of the same type, should be summed both
         testData.getHeadphones().getId(), testData.getHeadphones().getId(), testData.getClock().getId()
     );
     mockMvc.perform(
         post(
-            "/inventory/summary")
+            "/inventory/summary" + queryString)
             .contentType(MediaType.APPLICATION_JSON)
             .content("{ \"gadgetIds\": %s }".formatted(gadgetIdArray))
         )
@@ -29,11 +37,11 @@ class InventoryControllerTest extends ApiTest {
                   {
                     "gadgetIds": %s,
                     "volume": {
-                      "value": 12.456,
-                      "unit": "LITER"
+                      "unit": "%s",
+                      "value": "%s"
                     }
                   }
-                """.formatted(gadgetIdArray)
+                """.formatted(gadgetIdArray, expectedUnit, expectedVolume)
             )
         );
   }
@@ -54,7 +62,7 @@ class InventoryControllerTest extends ApiTest {
                   {
                     "gadgetIds": [],
                     "volume": {
-                      "value": 0,
+                      "value": "0",
                       "unit": "LITER"
                     }
                   }
@@ -95,7 +103,7 @@ class InventoryControllerTest extends ApiTest {
     for (int i = 1; i <= count; i++) {
       builder.append('"');
       builder.append(sampleId);
-      builder.append('"');;
+      builder.append('"');
       boolean notLast = i != count;
       if (notLast) {
         builder.append(',');

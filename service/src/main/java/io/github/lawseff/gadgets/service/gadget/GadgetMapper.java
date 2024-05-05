@@ -14,10 +14,12 @@ public class GadgetMapper {
 
   private final DimensionsMapper metricDimensionsMapper;
 
+  private final DimensionsMapper imperialDimensionsMapper;
+
   public GadgetDto mapToDto(Gadget gadget, LengthUnit unit) {
     var mapper = switch (unit) {
       case MM -> metricDimensionsMapper;
-      default -> throw new UnsupportedOperationException();
+      case INCH -> imperialDimensionsMapper;
     };
     var id = gadget.getId();
     var name = gadget.getName();

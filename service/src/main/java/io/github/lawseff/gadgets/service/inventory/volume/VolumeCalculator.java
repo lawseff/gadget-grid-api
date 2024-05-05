@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface VolumeCalculator {
 
-  VolumeDto getVolume(List<Gadget> gadgets);
+  VolumeDto getVolume(List<Gadget> gadgets, VolumeUnit unit);
 
 }
