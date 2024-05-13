@@ -21,7 +21,7 @@ abstract class ApiTest {
   @Autowired
   protected MockMvc mockMvc;
 
-  protected TestData testData = new TestData();
+  protected final TestData testData = new TestData();
 
   @Autowired
   private GadgetRepository repository;

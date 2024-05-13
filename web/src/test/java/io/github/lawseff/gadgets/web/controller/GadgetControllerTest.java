@@ -1,5 +1,6 @@
 package io.github.lawseff.gadgets.web.controller;
 
+import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -28,9 +29,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Action Camera",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 60,
-                    "width": 40,
-                    "height": 30
+                    "length": "60",
+                    "width": "40",
+                    "height": "30"
                   },
                   "imageUrl": null
                 },
@@ -39,9 +40,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Bluetooth Speaker",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 150,
-                    "width": 80,
-                    "height": 25
+                    "length": "150",
+                    "width": "80",
+                    "height": "25"
                   },
                   "imageUrl": null
                 },
@@ -50,9 +51,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Clock (Digital)",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 120,
-                    "width": 40,
-                    "height": 80
+                    "length": "120",
+                    "width": "40",
+                    "height": "80"
                   },
                   "imageUrl": null
                 },
@@ -61,9 +62,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Drone",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 300,
-                    "width": 300,
-                    "height": 100
+                    "length": "300",
+                    "width": "300",
+                    "height": "100"
                   },
                   "imageUrl": null
                 },
@@ -72,9 +73,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "E-reader",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 150,
-                    "width": 100,
-                    "height": 5
+                    "length": "150",
+                    "width": "100",
+                    "height": "5"
                   },
                   "imageUrl": null
                 },
@@ -83,9 +84,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Fitness Tracker",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 50,
-                    "width": 20,
-                    "height": 10
+                    "length": "50",
+                    "width": "20",
+                    "height": "10"
                   },
                   "imageUrl": null
                 },
@@ -94,9 +95,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Glucose Meter",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 80,
-                    "width": 60,
-                    "height": 20
+                    "length": "80",
+                    "width": "60",
+                    "height": "20"
                   },
                   "imageUrl": null
                 },
@@ -105,9 +106,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Headphones",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 180,
-                    "width": 150,
-                    "height": 50
+                    "length": "180",
+                    "width": "150",
+                    "height": "50"
                   },
                   "imageUrl": null
                 }
@@ -150,9 +151,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Drone",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 300,
-                    "width": 300,
-                    "height": 100
+                    "length": "300",
+                    "width": "300",
+                    "height": "100"
                   },
                   "imageUrl": null
                 },
@@ -161,9 +162,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "E-reader",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 150,
-                    "width": 100,
-                    "height": 5
+                    "length": "150",
+                    "width": "100",
+                    "height": "5"
                   },
                   "imageUrl": null
                 },
@@ -172,9 +173,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Fitness Tracker",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 50,
-                    "width": 20,
-                    "height": 10
+                    "length": "50",
+                    "width": "20",
+                    "height": "10"
                   },
                   "imageUrl": null
                 }
@@ -197,6 +198,44 @@ class GadgetControllerTest extends ApiTest {
         ));
   }
 
+  @ParameterizedTest
+  @CsvSource({
+      "?size=1,MM,60,40,30", // Default unit, when not specified
+      "?size=1&unit=MM,MM,60,40,30",
+      "?size=1&unit=INCH,INCH,2.3622,1.5748,1.1811"
+  })
+  void variousUnitsSupported(
+      String queryString, LengthUnit expectedUnit,
+      String expectedLength, String expectedWidth, String expectedHeight
+  ) throws Exception {
+    mockMvc.perform(get("/gadgets" + queryString))
+        .andExpect(status().isOk())
+        .andExpect(header().string(HttpHeaders.CACHE_CONTROL, "max-age=3600"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            """
+            {
+              "data": [
+                {
+                  "id": "%s",
+                  "name": "Action Camera",
+                  "dimensions": {
+                    "unit": "%s",
+                    "length": "%s",
+                    "width": "%s",
+                    "height": "%s"
+                  },
+                  "imageUrl": null
+                }
+              ]
+            }
+            """.formatted(
+                testData.getActionCamera().getId(),
+                expectedUnit, expectedLength, expectedWidth, expectedHeight
+            )
+        ));
+  }
+
   @Test
   void searchWorks() throws Exception {
     mockMvc.perform(get("/gadgets?search=tooTH+++speak"))
@@ -212,9 +251,9 @@ class GadgetControllerTest extends ApiTest {
                   "name": "Bluetooth Speaker",
                   "dimensions": {
                     "unit": "MM",
-                    "length": 150,
-                    "width": 80,
-                    "height": 25
+                    "length": "150",
+                    "width": "80",
+                    "height": "25"
                   },
                   "imageUrl": null
                 }
