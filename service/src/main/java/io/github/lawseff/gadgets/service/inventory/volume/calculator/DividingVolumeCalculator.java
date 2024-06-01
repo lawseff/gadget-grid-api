@@ -1,7 +1,8 @@
-package io.github.lawseff.gadgets.service.inventory.volume;
+package io.github.lawseff.gadgets.service.inventory.volume.calculator;
 
-import io.github.lawseff.gadgets.persistence.entity.Gadget;
-import io.github.lawseff.gadgets.service.exception.UnsupportedUnitException;
+import io.github.lawseff.gadgets.persistence.gadget.Gadget;
+import io.github.lawseff.gadgets.service.inventory.volume.VolumeDto;
+import io.github.lawseff.gadgets.service.inventory.volume.VolumeUnit;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;

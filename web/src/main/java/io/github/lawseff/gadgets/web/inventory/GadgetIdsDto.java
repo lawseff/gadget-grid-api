@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.web.controller;
+package io.github.lawseff.gadgets.web.inventory;
 
 import jakarta.validation.constraints.Size;
 import java.util.List;

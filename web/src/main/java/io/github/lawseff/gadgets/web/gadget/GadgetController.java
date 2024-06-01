@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.web.controller;
+package io.github.lawseff.gadgets.web.gadget;
 
 import io.github.lawseff.gadgets.service.gadget.GadgetService;
 import io.github.lawseff.gadgets.service.gadget.GadgetDto;

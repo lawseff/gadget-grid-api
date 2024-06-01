@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.persistence.exception;
+package io.github.lawseff.gadgets.persistence;
 
 public class EntityNotFoundException extends RuntimeException {
 

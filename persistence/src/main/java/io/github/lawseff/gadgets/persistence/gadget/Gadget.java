@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.persistence.entity;
+package io.github.lawseff.gadgets.persistence.gadget;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;

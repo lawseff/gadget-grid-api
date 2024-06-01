@@ -1,7 +1,6 @@
-package io.github.lawseff.gadgets.persistence;
+package io.github.lawseff.gadgets.persistence.gadget;
 
-import io.github.lawseff.gadgets.persistence.entity.Gadget;
-import io.github.lawseff.gadgets.persistence.exception.EntityNotFoundException;
+import io.github.lawseff.gadgets.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
