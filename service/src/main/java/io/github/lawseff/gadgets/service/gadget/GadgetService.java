@@ -1,7 +1,7 @@
 package io.github.lawseff.gadgets.service.gadget;
 
-import io.github.lawseff.gadgets.persistence.GadgetRepository;
-import io.github.lawseff.gadgets.persistence.entity.Gadget;
+import io.github.lawseff.gadgets.persistence.gadget.GadgetRepository;
+import io.github.lawseff.gadgets.persistence.gadget.Gadget;
 import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.search.PaginationDto;
 import io.github.lawseff.gadgets.service.search.SearchRequest;

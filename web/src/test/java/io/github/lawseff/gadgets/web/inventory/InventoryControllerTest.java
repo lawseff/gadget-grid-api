@@ -1,6 +1,7 @@
-package io.github.lawseff.gadgets.web.controller;
+package io.github.lawseff.gadgets.web.inventory;
 
 import io.github.lawseff.gadgets.service.inventory.volume.VolumeUnit;
+import io.github.lawseff.gadgets.web.ApiTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

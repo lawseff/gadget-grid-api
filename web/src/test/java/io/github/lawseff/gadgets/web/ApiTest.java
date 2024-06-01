@@ -1,8 +1,8 @@
-package io.github.lawseff.gadgets.web.controller;
+package io.github.lawseff.gadgets.web;
 
-import io.github.lawseff.gadgets.persistence.GadgetRepository;
-import io.github.lawseff.gadgets.persistence.entity.Dimensions;
-import io.github.lawseff.gadgets.persistence.entity.Gadget;
+import io.github.lawseff.gadgets.persistence.gadget.GadgetRepository;
+import io.github.lawseff.gadgets.persistence.gadget.Dimensions;
+import io.github.lawseff.gadgets.persistence.gadget.Gadget;
 import lombok.Getter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-abstract class ApiTest {
+public abstract class ApiTest {
 
   @Autowired
   protected MockMvc mockMvc;

@@ -1,4 +1,4 @@
-package io.github.lawseff.gadgets.web.controller;
+package io.github.lawseff.gadgets.web.inventory;
 
 import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.inventory.InventoryService;

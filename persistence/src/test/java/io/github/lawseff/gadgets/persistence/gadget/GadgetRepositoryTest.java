@@ -1,8 +1,6 @@
-package io.github.lawseff.gadgets.persistence;
+package io.github.lawseff.gadgets.persistence.gadget;
 
-import io.github.lawseff.gadgets.persistence.entity.Dimensions;
-import io.github.lawseff.gadgets.persistence.entity.Gadget;
-import io.github.lawseff.gadgets.persistence.exception.EntityNotFoundException;
+import io.github.lawseff.gadgets.persistence.EntityNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
