@@ -1,9 +1,9 @@
 package io.github.lawseff.gadgets.persistence.gadget;
 
 import io.github.lawseff.gadgets.persistence.EntityNotFoundException;
+import io.github.lawseff.gadgets.persistence.test.DatabaseTest;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DataJpaTest
-class GadgetRepositoryTest {
+class GadgetRepositoryTest extends DatabaseTest {
 
   /**
    * Indicates how close double values should be to the expected result (absolute value).
@@ -25,11 +25,6 @@ class GadgetRepositoryTest {
 
   @Autowired
   private GadgetRepository repository;
-
-  @BeforeEach
-  void setUp() {
-    repository.deleteAll();
-  }
 
   @Test
   void findAllWorks() {
