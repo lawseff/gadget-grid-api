@@ -3,20 +3,21 @@ package io.github.lawseff.gadgets.web;
 import io.github.lawseff.gadgets.persistence.gadget.GadgetRepository;
 import io.github.lawseff.gadgets.persistence.gadget.Dimensions;
 import io.github.lawseff.gadgets.persistence.gadget.Gadget;
+import io.github.lawseff.gadgets.persistence.test.DatabaseTest;
 import lombok.Getter;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public abstract class ApiTest {
+// Note: @TestInstance(TestInstance.Lifecycle.PER_CLASS) doesn't work with the test containers
+// auto-start: https://github.com/testcontainers/testcontainers-java/issues/2290
+public abstract class ApiTest extends DatabaseTest {
 
   @Autowired
   protected MockMvc mockMvc;
@@ -26,7 +27,7 @@ public abstract class ApiTest {
   @Autowired
   private GadgetRepository repository;
 
-  @BeforeAll
+  @BeforeEach
   void setUp() {
     repository.deleteAll();
     testData.saveAll();

@@ -1,7 +1,3 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/gadgets_test
-    username: gadgets_test
-    password: gadgets_test
   liquibase:
     contexts: test

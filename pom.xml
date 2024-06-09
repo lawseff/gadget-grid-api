@@ -16,8 +16,10 @@
 
     <properties>
         <java.version>21</java.version>
+        <project.build.surefire.version>3.2.5</project.build.surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <test.postgresql.image>postgres:16.2</test.postgresql.image>
     </properties>
 
     <packaging>pom</packaging>
@@ -25,7 +27,41 @@
         <module>persistence</module>
         <module>service</module>
         <module>web</module>
+        <module>persistence-test</module>
     </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--  Sets system properties for the application -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${project.build.surefire.version}</version>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <test.postgresql.image>${test.postgresql.image}</test.postgresql.image>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Fixes the vulnerabilities of commons-compress, the transitive dependency of
+            org.testcontainers:junit-jupiter:
+            - CVE-2024-26308
+            - CVE-2024-25710
+            -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>1.26.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
