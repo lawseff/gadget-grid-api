@@ -1,0 +1,10 @@
+services:
+  gadgets-postgres:
+    image: postgres:16.2
+    container_name: gadgets-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=gadgets
+      - POSTGRES_USER=gadgets
+      - POSTGRES_PASSWORD=gadgets
