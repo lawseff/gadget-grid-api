@@ -1,23 +1,35 @@
 package io.github.lawseff.gadgets.web;
 
-import io.github.lawseff.gadgets.persistence.gadget.GadgetRepository;
-import io.github.lawseff.gadgets.persistence.gadget.Dimensions;
-import io.github.lawseff.gadgets.persistence.gadget.Gadget;
-import io.github.lawseff.gadgets.persistence.test.DatabaseTest;
+import io.github.lawseff.gadgets.database.gadget.GadgetRepository;
+import io.github.lawseff.gadgets.database.gadget.Dimensions;
+import io.github.lawseff.gadgets.database.gadget.Gadget;
+import io.github.lawseff.gadgets.database.test.ContainerTest;
 import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.MinIOContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 // Note: @TestInstance(TestInstance.Lifecycle.PER_CLASS) doesn't work with the test containers
 // auto-start: https://github.com/testcontainers/testcontainers-java/issues/2290
-public abstract class ApiTest extends DatabaseTest {
+public abstract class ApiTest extends ContainerTest {
+
+  @Container
+  @ServiceConnection
+  private static final PostgreSQLContainer<?> POSTGRES = createPostgresContainer();
+
+  @Container
+  private static final MinIOContainer MINIO = createMinioContainer();
 
   @Autowired
   protected MockMvc mockMvc;

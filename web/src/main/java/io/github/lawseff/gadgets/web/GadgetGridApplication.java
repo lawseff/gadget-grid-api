@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "io.github.lawseff.gadgets")
-@EnableJpaRepositories("io.github.lawseff.gadgets.persistence")
-@EntityScan("io.github.lawseff.gadgets.persistence")
+@EnableJpaRepositories("io.github.lawseff.gadgets.database")
+@EntityScan("io.github.lawseff.gadgets.database")
 public class GadgetGridApplication {
 
   public static void main(String[] args) {

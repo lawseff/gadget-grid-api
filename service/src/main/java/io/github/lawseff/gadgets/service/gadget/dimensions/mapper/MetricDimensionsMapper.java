@@ -1,6 +1,6 @@
 package io.github.lawseff.gadgets.service.gadget.dimensions.mapper;
 
-import io.github.lawseff.gadgets.persistence.gadget.Dimensions;
+import io.github.lawseff.gadgets.database.gadget.Dimensions;
 import io.github.lawseff.gadgets.service.gadget.dimensions.DimensionsDto;
 import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import org.springframework.stereotype.Component;

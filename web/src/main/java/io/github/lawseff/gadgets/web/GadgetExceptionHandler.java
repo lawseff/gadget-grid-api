@@ -1,6 +1,6 @@
 package io.github.lawseff.gadgets.web;
 
-import io.github.lawseff.gadgets.persistence.EntityNotFoundException;
+import io.github.lawseff.gadgets.database.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

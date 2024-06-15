@@ -8,7 +8,7 @@ public record SearchRequest(
 
     int pageSize,
 
-    String searchString,
+    String textContains,
 
     LengthUnit unit
 

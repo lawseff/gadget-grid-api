@@ -1,6 +1,6 @@
 package io.github.lawseff.gadgets.service.gadget;
 
-import io.github.lawseff.gadgets.persistence.gadget.Gadget;
+import io.github.lawseff.gadgets.database.gadget.Gadget;
 import io.github.lawseff.gadgets.service.gadget.dimensions.mapper.DimensionsMapper;
 import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import lombok.RequiredArgsConstructor;

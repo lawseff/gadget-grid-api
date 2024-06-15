@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**
- * Serializes double values: rounded half-up to 4 decimal places, without trailing zeros, as JSON strings.
+ * Serializes double values: rounded half-up to 4 decimal places, without trailing zeros, as strings.
  * <br>
  * Note, that Jackson applies a {@link JsonSerializer} to a single handled type, so you need separate instances to
  * handle both the primitive and the wrapper types, e.g.
@@ -20,12 +20,12 @@ import java.text.DecimalFormat;
 @RequiredArgsConstructor
 public class RoundingDoubleSerializer extends JsonSerializer<Double> {
 
-  private final Class<Double> handledType;
-
   /**
    * @see RoundingDoubleSerializer
    */
   private static final DecimalFormat FORMAT = new DecimalFormat("#.####");
+
+  private final Class<Double> handledType;
 
   @Override
   public void serialize(Double value, JsonGenerator generator, SerializerProvider provider) throws IOException {

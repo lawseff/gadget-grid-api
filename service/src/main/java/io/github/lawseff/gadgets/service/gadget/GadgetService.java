@@ -1,7 +1,7 @@
 package io.github.lawseff.gadgets.service.gadget;
 
-import io.github.lawseff.gadgets.persistence.gadget.GadgetRepository;
-import io.github.lawseff.gadgets.persistence.gadget.Gadget;
+import io.github.lawseff.gadgets.database.gadget.GadgetRepository;
+import io.github.lawseff.gadgets.database.gadget.Gadget;
 import io.github.lawseff.gadgets.service.gadget.dimensions.LengthUnit;
 import io.github.lawseff.gadgets.service.search.PaginationDto;
 import io.github.lawseff.gadgets.service.search.SearchRequest;
@@ -34,15 +34,15 @@ public class GadgetService {
 
   public SearchResponse<GadgetDto> findGadgets(SearchRequest request) {
     Pageable pageable = PageRequest.of(request.pageNumber(), request.pageSize());
-    var searchString = prepareSearchString(request);
-    var data = searchString.isPresent()
-        ? repository.findByNameContainingIgnoreCase(pageable, searchString.get())
+    var textContains = prepareTextContains(request);
+    var data = textContains.isPresent()
+        ? repository.findByNameContainingIgnoreCase(pageable, textContains.get())
         : repository.findAll(pageable);
-    return mapToResponse(data, searchString, request.unit());
+    return mapToResponse(data, textContains, request.unit());
   }
 
-  private Optional<String> prepareSearchString(SearchRequest request) {
-    return Optional.ofNullable(request.searchString())
+  private Optional<String> prepareTextContains(SearchRequest request) {
+    return Optional.ofNullable(request.textContains())
         // Converts to lowercase for a prettier string in the response DTO
         .map(searchString -> searchString.toLowerCase(Locale.US)
             .trim().replaceAll(MULTIPLE_WHITESPACES, SINGLE_SPACE)
